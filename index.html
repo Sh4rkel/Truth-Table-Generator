@@ -1,0 +1,67 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Logical proposition</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="Logic Truth Table Generator">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+  <div class="logicParser">
+    <label for="proposition">Enter Logical Proposition:</label>
+    <input type="text" id="proposition" placeholder="e.g., P V Q">
+    <button id="symbolAndButton" onclick="addSymbol('∧')">∧</button>
+    <button id="symbolOrButton" onclick="addSymbol('∨')">∨</button>
+    <button id="symbolImpButton" onclick="addSymbol('⇒')">⇒</button>
+    <button id="symbolEqButton" onclick="addSymbol('⇔')">⇔</button>
+    <button id="symbolNegButton" onclick="addSymbol('¬')">¬</button>
+    <button id="symbolExDisButton" onclick="addSymbol('⊕')">⊕</button>
+    <button id="symbolConsButton" onclick="addSymbol('⊨')">⊨</button>
+  </div>
+  <div class="logicParser">
+    <button id="symbolAButton" onclick="addSymbol('A')">A</button>
+    <button id="symbolBButton" onclick="addSymbol('B')">B</button>
+    <button id="symbolCButton" onclick="addSymbol('C')">C</button>
+    <button id="symbolDButton" onclick="addSymbol('D')">D</button>
+    <button id="symbolEButton" onclick="addSymbol('E')">E</button>
+    <button id="symbolFButton" onclick="addSymbol('F')">F</button>
+    <button id="symbolGButton" onclick="addSymbol('G')">G</button>
+    <button id="symbolHButton" onclick="addSymbol('H')">H</button>
+    <button id="symbolJButton" onclick="addSymbol('J')">J</button>
+    <button id="symbolKButton" onclick="addSymbol('K')">K</button>
+    <button id="symbolLButton" onclick="addSymbol('L')">L</button>
+    <button id="symbolMButton" onclick="addSymbol('M')">M</button>
+    <button id="symbolNButton" onclick="addSymbol('N')">N</button>
+    <button id="symbolOButton" onclick="addSymbol('O')">O</button>
+    <button id="symbolPButton" onclick="addSymbol('P')">P</button>
+    <button id="symbolQButton" onclick="addSymbol('Q')">Q</button>
+    <button id="symbolRButton" onclick="addSymbol('R')">R</button>
+    <button id="symbolSButton" onclick="addSymbol('S')">S</button>
+    <button id="symbolTButton" onclick="addSymbol('T')">T</button>
+    <button id="symbolUButton" onclick="addSymbol('U')">U</button>
+    <button id="symbolVButton" onclick="addSymbol('V')">V</button>
+    <button id="symbolWButton" onclick="addSymbol('W')">W</button>
+    <button id="symbolXButton" onclick="addSymbol('X')">X</button>
+    <button id="symbolYButton" onclick="addSymbol('Y')">Y</button>
+    <button id="symbolZButton" onclick="addSymbol('Z')">Z</button>
+  </div>
+  <div class="truthTableContainer">
+    <table id="truthTable">
+      <!-- Table content will be generated dynamically -->
+    </table>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>
