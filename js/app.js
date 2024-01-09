@@ -36,7 +36,7 @@ function evaluateManualResult(proposition, variables, truthValues) {
   // You can implement your logic here based on the specific proposition
 
   // Extracting the logical operator from the proposition
-  const operatorMatch = proposition.match(/[∧∨→⇒↔¬⊕⊨]/);
+  const operatorMatch = proposition.match(/[∧∨→⇒⇔¬⊕⊨]/);
   const operator = operatorMatch ? operatorMatch[0] : null;
   console.log("Operator: " + operator)
 
@@ -50,7 +50,7 @@ function evaluateManualResult(proposition, variables, truthValues) {
       case '→':
       case '⇒':
         return !truthValues[0] || truthValues[1];
-      case '↔':
+      case '⇔':
         return truthValues[0] === truthValues[1];
       case '¬':
         return !truthValues[0];
@@ -80,7 +80,7 @@ function extractVariables(proposition) {
 
 // Helper function to extract operators from the proposition
 function extractOperators(proposition) {
-  const operatorRegex = /[\^v∨∧→⇒↔]|\([^\(\)]*\)/g;
+  const operatorRegex = /[\^v∨∧→⇒⇔]|\([^\(\)]*\)/g;
   const operators = proposition.match(operatorRegex);
   return operators || [];
 }
@@ -125,7 +125,7 @@ function parseExpression(proposition, variableMap) {
 
   for (const token of tokens) {
     console.log('Processing Token:', token);
-    if (token in {'∧': 1, '∨': 1, '→': 1, '⇒': 1, '↔': 1}) {
+    if (token in {'∧': 1, '∨': 1, '→': 1, '⇒': 1, '⇔': 1}) {
       const right = stack.pop();
       const left = stack.pop();
       stack.push(new ExpressionNode(token, left, right));
@@ -149,14 +149,14 @@ function parseExpression(proposition, variableMap) {
   return buildSubTree(stack, variableMap);
 }
 function tokenize(proposition) {
-  return proposition.match(/([A-Z]+|[∧∨→⇒↔()])/g) || [];
+  return proposition.match(/([A-Z]+|[∧∨→⇒⇔()])/g) || [];
 }
 function buildSubTree(tokens, variableMap) {
   const stack = [];
 
   for (const token of tokens) {
     console.log('Current Token:', token);
-    if (token in {'∧': 1, '∨': 1, '→': 1, '⇒': 1, '↔': 1, '¬': 1}) {
+    if (token in {'∧': 1, '∨': 1, '→': 1, '⇒': 1, '⇔': 1, '¬': 1}) {
       if (token === '¬') {
         const operand = stack.pop();
         stack.push(new ExpressionNode(token, operand));
@@ -210,7 +210,7 @@ function evaluateExpression(node, variableMap) {
       case '⇒':
         console.log("I am here! =>");
         return !leftResult || rightResult;
-      case '↔':
+      case '⇔':
         console.log("I am here! <=>");
         return leftResult === rightResult;
       case '¬':
@@ -267,7 +267,7 @@ function validateProposition(proposition) {
   return isValid;
 }
 function isValidCharacters(proposition) {
-  const validCharactersRegex = /^[A-Z∧∨→⇒↔()¬⊕⊨ ]+$/u;
+  const validCharactersRegex = /^[A-Z∧∨→⇒⇔()¬⊕⊨ ]+$/u;
 
   // Allow single uppercase letters without logical operators
   if (proposition.length === 1 && /[A-Z]/.test(proposition)) {
@@ -275,7 +275,7 @@ function isValidCharacters(proposition) {
   }
 
   const isValid = validCharactersRegex.test(proposition);
-  const invalidCharacters = proposition.match(/[^A-Z∧∨→⇒↔()¬⊕⊨ ]/gu);
+  const invalidCharacters = proposition.match(/[^A-Z∧∨→⇒⇔()¬⊕⊨ ]/gu);
 
   console.log("Proposition:", proposition);
   console.log("Regex Test Result:", isValid);
