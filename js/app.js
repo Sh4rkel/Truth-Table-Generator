@@ -32,44 +32,42 @@ function generateTruthTable(proposition) {
   return truthTable;
 }
 function evaluateManualResult(proposition, variables, truthValues) {
-  // Manually evaluate the result based on the proposition and truth values
-  // You can implement your logic here based on the specific proposition
+  const operators = proposition.match(/[∧∨→⇒↔¬⊕⊨]/g) || [];
+  console.log("Operators: " + operators);
 
-  // Extracting the logical operator from the proposition
-  const operatorMatch = proposition.match(/[∧∨→⇒⇔¬⊕⊨]/);
-  const operator = operatorMatch ? operatorMatch[0] : null;
-  console.log("Operator: " + operator)
-
-  if (operator) {
-    // Use the appropriate logic based on the operator
+  const evaluateOperation = (left, operator, right) => {
     switch (operator) {
       case '∧':
-        return truthValues.reduce((acc, value) => acc && value, true);
+        return left && right;
       case '∨':
-        return truthValues.reduce((acc, value) => acc || value, false);
+        return left || right;
       case '→':
       case '⇒':
-        return !truthValues[0] || truthValues[1];
-      case '⇔':
-        return truthValues[0] === truthValues[1];
+        return !left || right;
+      case '↔':
+        return left === right;
       case '¬':
-        return !truthValues[0];
+        return !left;
       case '⊕':
-        return (truthValues[0] || truthValues[1]) && !(truthValues[0] && truthValues[1]);
+        return (left || right) && !(left && right);
       case '⊨':
-        // Implement the logic for double entailment (⊨)
-        // For simplicity, I'm using conjunction ('∧') as a placeholder
-        return truthValues.reduce((acc, value) => acc && value, true);
-      // Add more cases for other operators as needed
+        return left && right;
       default:
-        // Default to conjunction ('∧') if no operator is found
-        return truthValues.reduce((acc, value) => acc && value, true);
+        return left && right;
     }
-  } else {
-    // Default to conjunction ('∧') if no operator is found
-    return truthValues.reduce((acc, value) => acc && value, true);
+  };
+
+  let result = truthValues[0];
+  for (let i = 0; i < operators.length; i++) {
+    const operator = operators[i];
+    const nextValue = truthValues[i + 1];
+    result = evaluateOperation(result, operator, nextValue);
   }
+
+  return result;
 }
+
+
 
 // Helper function to extract variables from the proposition
 function extractVariables(proposition) {
@@ -185,48 +183,37 @@ function buildSubTree(tokens, variableMap) {
 }
 
 // Evaluate the expression tree
+// Evaluate the expression tree
 function evaluateExpression(node, variableMap) {
   if (!node) {
-    console.log("I am hereeeee sadaskldjaslkdj");
     return false;
   }
 
   if (node.value !== undefined) {
-    console.log("Evaluate expressions...");
     const leftResult = evaluateExpression(node.left, variableMap);
     const rightResult = evaluateExpression(node.right, variableMap);
-    console.log("Symbol: " + node.value);
-    console.log('Left Result:', leftResult, "and left node, " + (node.left ? node.left.value : null));
-    console.log('Right Result:', rightResult, "and right node, " + (node.right ? node.right.value : null));
 
     switch (node.value) {
       case '∧':
-        console.log("I am here! ^");
         return leftResult && rightResult;
       case '∨':
-        console.log("I am here! V");
         return leftResult || rightResult;
       case '→':
       case '⇒':
-        console.log("I am here! =>");
         return !leftResult || rightResult;
       case '⇔':
-        console.log("I am here! <=>");
         return leftResult === rightResult;
       case '¬':
-        console.log("Negation!");
         return !leftResult;
       default:
-        console.log("I am here! default");
-        console.log("Something went wrong!");
         return false;
     }
   } else {
-    console.log("Finish!");
     const nodeValue = variableMap[node.value !== undefined ? node.value : ''];
     return nodeValue !== undefined ? nodeValue : false;
   }
 }
+
 function updateTruthTable(truthTable) {
   console.log('Updating truth table:', truthTable);
   const tableElement = document.getElementById('truthTable');
