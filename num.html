@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Convert Numbers</title>
+  <link rel="stylesheet" href="css/num-convert.css">
+  <meta name="description" content="A convertor for numbers">
+
+  <meta property="og:title" content="Number convertor">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta name="theme-color" content="#fafafa">
+</head>
+<body>
+  <div class="converter-container">
+    <h1>Base Converter</h1>
+    <input type="text" id="inputNumber" placeholder="Enter number">
+    <select id="fromBase">
+      <option value="2">Binary</option>
+      <option value="8">Octal</option>
+      <option value="10" selected>Decimal</option>
+      <option value="16">Hexadecimal</option>
+    </select>
+    <select id="toBase">
+      <option value="2">Binary</option>
+      <option value="8">Octal</option>
+      <option value="10">Decimal</option>
+      <option value="16" selected>Hexadecimal</option>
+    </select>
+    <button onclick="convert()">Convert</button>
+    <div id="resultContainer"></div>
+    <a href="index.html" class="link">Go to Truth Table Generator</a>
+  </div>
+  <script src="js/numberConvertLogic.js"></script>
+
+</body>
+</html>
