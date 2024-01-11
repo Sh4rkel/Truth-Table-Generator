@@ -24,20 +24,9 @@ function displayResult(result) {
   const resultElement = document.createElement('p');
   resultElement.textContent = `Result: ${result}`;
   resultContainer.appendChild(resultElement);
-
-  // You can also add step-by-step representation here if needed
-  // For example:
-  // const steps = convertStepByStep();
-  // displaySteps(steps);
 }
 
 // Function for step-by-step representation (customize as needed)
-function convertStepByStep() {
-  // Implement the step-by-step conversion logic here
-  // Return an array of steps
-  return ['Step 1: ...', 'Step 2: ...', 'Step 3: ...'];
-}
-
 function displaySteps(steps) {
   const resultContainer = document.getElementById('resultContainer');
 
