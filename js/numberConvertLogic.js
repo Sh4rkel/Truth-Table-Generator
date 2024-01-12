@@ -1,43 +1,48 @@
 function convert() {
-  // Retrieve values from the input fields and select elements
   const inputNumber = document.getElementById('inputNumber').value;
   const fromBase = parseInt(document.getElementById('fromBase').value, 10);
-  const toBase = parseInt(document.getElementById('toBase').value, 10);
+  const toBase = document.getElementById('toBase').value;
 
-  // Convert the input number from the specified base to decimal
-  const decimalNumber = parseInt(inputNumber, fromBase);
+  if (isNaN(inputNumber) || inputNumber === "") {
+    alert("Please enter a valid number.");
+    return;
+  }
 
-  // Convert the decimal number to the specified base
-  const result = decimalNumber.toString(toBase).toUpperCase();
+  let result;
+  if (toBase === '2c') {
+    result = convertToTwosComplement(inputNumber, fromBase);
+  } else {
+    const decimalNumber = parseInt(inputNumber, fromBase);
+    result = decimalNumber.toString(toBase).toUpperCase();
+  }
 
-  // Display the result
   displayResult(result);
 }
 
+// Implement a undo conversion logic for later
+
+// Implement an AI that can explain the conversion process
+
+
+
 function displayResult(result) {
   const resultContainer = document.getElementById('resultContainer');
-
-  // Clear previous results
   resultContainer.innerHTML = '';
 
-  // Display the result in a beautiful way
   const resultElement = document.createElement('p');
   resultElement.textContent = `Result: ${result}`;
   resultContainer.appendChild(resultElement);
 }
 
-function displaySteps(steps) {
-  const resultContainer = document.getElementById('resultContainer');
+// Create a step by step visual representation for the conversion process
+function convertToTwosComplement(inputNumber, fromBase) {
+  // Convert the input number to binary and get its length
+  const binaryNumber = parseInt(inputNumber, fromBase).toString(2);
+  const length = binaryNumber.length;
 
-  // Display steps
-  const stepsElement = document.createElement('div');
-  stepsElement.classList.add('step');
+  // Calculate the 2's complement by inverting bits and adding 1
+  const inverted = parseInt(binaryNumber, 2) ^ (Math.pow(2, length) - 1);
+  const twosComplement = (inverted + 1) & (Math.pow(2, length) - 1);
 
-  steps.forEach((step, index) => {
-    const stepElement = document.createElement('p');
-    stepElement.textContent = `${index + 1}. ${step}`;
-    stepsElement.appendChild(stepElement);
-  });
-
-  resultContainer.appendChild(stepsElement);
+  return twosComplement.toString(2).padStart(length, '0');
 }
