@@ -21,10 +21,6 @@ function convert() {
 
 // Implement a undo conversion logic for later
 
-
-
-
-
 // Implement an AI that can explain the conversion process
 
 
