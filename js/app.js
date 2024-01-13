@@ -32,10 +32,23 @@ function generateTruthTable(proposition) {
   return truthTable;
 }
 function evaluateManualResult(proposition, variables, truthValues) {
-  const operators = proposition.match(/[∧∨→⇒↔¬⊕⊨]/g) || [];
-  console.log("Operators: " + operators);
+  const operatorStack = [];
+  const valueStack = [];
 
-  const evaluateOperation = (left, operator, right) => {
+  const pushOperator = (operator) => {
+    while (
+      operatorStack.length > 0 &&
+      hasPrecedence(operator, operatorStack[operatorStack.length - 1])
+      ) {
+      const topOperator = operatorStack.pop();
+      const right = valueStack.pop();
+      const left = valueStack.pop();
+      valueStack.push(applyOperator(topOperator, left, right));
+    }
+    operatorStack.push(operator);
+  };
+
+  const applyOperator = (operator, left, right) => {
     switch (operator) {
       case '∧':
         return left && right;
@@ -44,28 +57,55 @@ function evaluateManualResult(proposition, variables, truthValues) {
       case '→':
       case '⇒':
         return !left || right;
-      case '↔':
+      case '⇔':
         return left === right;
       case '¬':
-        return !left;
+        return !right;
       case '⊕':
         return (left || right) && !(left && right);
-      case '⊨':
-        return left && right;
       default:
-        return left && right;
+        return false;
     }
   };
 
-  let result = truthValues[0];
-  for (let i = 0; i < operators.length; i++) {
-    const operator = operators[i];
-    const nextValue = truthValues[i + 1];
-    result = evaluateOperation(result, operator, nextValue);
+  const hasPrecedence = (op1, op2) => {
+    const precedence = { '∧': 1, '∨': 1, '→': 2, '⇒': 2, '⇔': 3, '¬': 4, '⊕': 1 };
+    return precedence[op1] >= precedence[op2];
+  };
+
+  for (let i = 0; i < proposition.length; i++) {
+    const token = proposition[i];
+    if (token === '(') {
+      operatorStack.push(token);
+    } else if (token === ')') {
+      while (operatorStack.length > 0 && operatorStack[operatorStack.length - 1] !== '(') {
+        const operator = operatorStack.pop();
+        const right = valueStack.pop();
+        const left = valueStack.pop();
+        valueStack.push(applyOperator(operator, left, right));
+      }
+      operatorStack.pop(); // Pop the '('
+    } else if (token in { '∧': 1, '∨': 1, '→': 1, '⇒': 1, '⇔': 1, '¬': 1, '⊕': 1 }) {
+      pushOperator(token);
+    } else {
+      // Assume it's a variable and look up its truth value
+      const variableIndex = variables.indexOf(token);
+      if (variableIndex !== -1) {
+        valueStack.push(truthValues[variableIndex]);
+      }
+    }
   }
 
-  return result;
+  while (operatorStack.length > 0) {
+    const operator = operatorStack.pop();
+    const right = valueStack.pop();
+    const left = valueStack.pop();
+    valueStack.push(applyOperator(operator, left, right));
+  }
+
+  return valueStack[0];
 }
+
 
 
 
