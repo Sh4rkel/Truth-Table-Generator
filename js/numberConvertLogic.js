@@ -21,7 +21,8 @@ function convert() {
 
 // Implement a undo conversion logic for later
 
-// Implement an AI that can explain the conversion process
+
+
 
 
 
@@ -34,7 +35,7 @@ function displayResult(result) {
   resultContainer.appendChild(resultElement);
 }
 
-// Create a step by step visual representation for the conversion process
+
 function convertToTwosComplement(inputNumber, fromBase) {
   // Convert the input number to binary and get its length
   const binaryNumber = parseInt(inputNumber, fromBase).toString(2);
