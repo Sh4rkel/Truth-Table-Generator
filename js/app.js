@@ -14,9 +14,7 @@ function generateTruthTable(proposition) {
   console.log('Generating truth table for proposition:', proposition);
   const variables = extractVariables(proposition);
   console.log("Operator: " + extractOperators(proposition));
-  // Generate all possible combinations of truth values for variables
   const truthValuesCombinations = generateTruthValuesCombinations(variables.length);
-  // Evaluate the proposition for each combination of truth values
   const truthTable = truthValuesCombinations.map(truthValues => {
     const row = {};
     variables.forEach((variable, index) => {
@@ -106,24 +104,18 @@ function evaluateManualResult(proposition, variables, truthValues) {
   return valueStack[0];
 }
 
-
-
-
-// Helper function to extract variables from the proposition
 function extractVariables(proposition) {
   const variableRegex = /[A-Z]/g;
   const variables = Array.from(new Set(proposition.match(variableRegex)));
   return variables;
 }
 
-// Helper function to extract operators from the proposition
 function extractOperators(proposition) {
   const operatorRegex = /[\^v∨∧→⇒⇔]|\([^\(\)]*\)/g;
   const operators = proposition.match(operatorRegex);
   return operators || [];
 }
 
-// Helper function to generate all possible combinations of truth values
 function generateTruthValuesCombinations(numVariables) {
   const combinations = [];
   for (let i = 0; i < Math.pow(2, numVariables); i++) {
@@ -144,7 +136,6 @@ function evaluateProposition(proposition, variables, truthValues) {
   return result;
 }
 
-// Define a simple expression tree structure
 class ExpressionNode {
   constructor(value, left = null, right = null) {
     this.value = value;
@@ -153,7 +144,6 @@ class ExpressionNode {
   }
 }
 
-// Parse the logical proposition into an expression tree
 function parseExpression(proposition, variableMap) {
   const tokens = tokenize(proposition);
   console.log("Tokens: " + JSON.stringify(tokens));
@@ -210,7 +200,6 @@ function buildSubTree(tokens, variableMap) {
     }
   }
 
-  // Correct handling of conjunctions
   if (stack.length > 1) {
     const right = stack.pop();
     const left = stack.pop();
@@ -222,8 +211,6 @@ function buildSubTree(tokens, variableMap) {
   return stack[0];
 }
 
-// Evaluate the expression tree
-// Evaluate the expression tree
 function evaluateExpression(node, variableMap) {
   if (!node) {
     return false;
@@ -258,7 +245,6 @@ function updateTruthTable(truthTable) {
   console.log('Updating truth table:', truthTable);
   const tableElement = document.getElementById('truthTable');
 
-  // Clear existing table rows
   while (tableElement.firstChild) {
     tableElement.removeChild(tableElement.firstChild);
   }
@@ -272,7 +258,6 @@ function updateTruthTable(truthTable) {
   });
   tableElement.appendChild(headerRow);
 
-  // Create data rows
   truthTable.forEach(rowData => {
     const row = document.createElement('tr');
     Object.values(rowData).forEach(value => {
@@ -283,6 +268,7 @@ function updateTruthTable(truthTable) {
     tableElement.appendChild(row);
   });
 }
+
 function validateProposition(proposition) {
   console.log('Validating proposition:', proposition);
   const isValid = isValidCharacters(proposition) && isBalancedParentheses(proposition);
@@ -296,7 +282,6 @@ function validateProposition(proposition) {
 function isValidCharacters(proposition) {
   const validCharactersRegex = /^[A-Z∧∨→⇒⇔()¬⊕⊨ ]+$/u;
 
-  // Allow single uppercase letters without logical operators
   if (proposition.length === 1 && /[A-Z]/.test(proposition)) {
     return true;
   }
@@ -318,15 +303,11 @@ function isBalancedParentheses(proposition) {
       stack.push(char);
     } else if (char === ')') {
       if (stack.length === 0) {
-        return false; // Unmatched closing parenthesis
+        return false; 
       }
       stack.pop();
     }
   }
 
-  return stack.length === 0; // Check if all opening parentheses are closed
+  return stack.length === 0; 
 }
-
-
-
-
