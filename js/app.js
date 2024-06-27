@@ -249,7 +249,6 @@ function updateTruthTable(truthTable) {
     tableElement.removeChild(tableElement.firstChild);
   }
 
-  // Create header row
   const headerRow = document.createElement('tr');
   Object.keys(truthTable[0]).forEach(key => {
     const th = document.createElement('th');
