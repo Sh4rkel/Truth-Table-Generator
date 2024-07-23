@@ -183,16 +183,13 @@ function buildSubTree(tokens, variableMap) {
   const stack = [];
 
   for (const token of tokens) {
-    console.log('Current Token:', token);
     if (token in {'∧': 1, '∨': 1, '→': 1, '⇒': 1, '⇔': 1, '¬': 1}) {
       if (token === '¬') {
         const operand = stack.pop();
         stack.push(new ExpressionNode(token, operand));
       } else {
         const right = stack.pop();
-        console.log(right + "right tree value");
         const left = stack.pop();
-        console.log(left + "left tree value")
         stack.push(new ExpressionNode(token, left, right));
       }
     } else {
@@ -205,9 +202,6 @@ function buildSubTree(tokens, variableMap) {
     const left = stack.pop();
     stack.push(new ExpressionNode('∧', left, right));
   }
-
-  console.log('Expression Stack:', stack);
-
   return stack[0];
 }
 
@@ -242,7 +236,6 @@ function evaluateExpression(node, variableMap) {
 }
 
 function updateTruthTable(truthTable) {
-  console.log('Updating truth table:', truthTable);
   const tableElement = document.getElementById('truthTable');
 
   while (tableElement.firstChild) {
@@ -269,7 +262,6 @@ function updateTruthTable(truthTable) {
 }
 
 function validateProposition(proposition) {
-  console.log('Validating proposition:', proposition);
   const isValid = isValidCharacters(proposition) && isBalancedParentheses(proposition);
 
   if (!isValid) {
@@ -287,11 +279,6 @@ function isValidCharacters(proposition) {
 
   const isValid = validCharactersRegex.test(proposition);
   const invalidCharacters = proposition.match(/[^A-Z∧∨→⇒⇔()¬⊕⊨ ]/gu);
-
-  console.log("Proposition:", proposition);
-  console.log("Regex Test Result:", isValid);
-  console.log("Invalid Characters:", invalidCharacters);
-
   return isValid;
 }
 function isBalancedParentheses(proposition) {
