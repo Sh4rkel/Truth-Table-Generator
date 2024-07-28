@@ -21,11 +21,6 @@ function convert() {
 
 // Implement a undo conversion logic for later
 
-
-
-
-
-
 function displayResult(result) {
   const resultContainer = document.getElementById('resultContainer');
   resultContainer.innerHTML = '';
