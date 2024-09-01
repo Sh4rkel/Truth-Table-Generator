@@ -82,11 +82,10 @@ function evaluateManualResult(proposition, variables, truthValues) {
         const left = valueStack.pop();
         valueStack.push(applyOperator(operator, left, right));
       }
-      operatorStack.pop(); // Pop the '('
+      operatorStack.pop(); 
     } else if (token in { '∧': 1, '∨': 1, '→': 1, '⇒': 1, '⇔': 1, '¬': 1, '⊕': 1 }) {
       pushOperator(token);
     } else {
-      // Assume it's a variable and look up its truth value
       const variableIndex = variables.indexOf(token);
       if (variableIndex !== -1) {
         valueStack.push(truthValues[variableIndex]);
