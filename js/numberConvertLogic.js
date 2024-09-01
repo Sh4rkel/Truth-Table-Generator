@@ -19,7 +19,6 @@ function convert() {
   displayResult(result);
 }
 
-// Implement a undo conversion logic for later
 
 function displayResult(result) {
   const resultContainer = document.getElementById('resultContainer');
@@ -32,11 +31,9 @@ function displayResult(result) {
 
 
 function convertToTwosComplement(inputNumber, fromBase) {
-  // Convert the input number to binary and get its length
   const binaryNumber = parseInt(inputNumber, fromBase).toString(2);
   const length = binaryNumber.length;
 
-  // Calculate the 2's complement by inverting bits and adding 1
   const inverted = parseInt(binaryNumber, 2) ^ (Math.pow(2, length) - 1);
   const twosComplement = (inverted + 1) & (Math.pow(2, length) - 1);
 
