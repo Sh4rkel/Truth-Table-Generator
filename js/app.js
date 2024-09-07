@@ -23,7 +23,6 @@ function generateTruthTable(proposition) {
     const result = evaluateManualResult(proposition, variables, truthValues);
     row['Result'] = result;
 
-
     return row;
   });
 
