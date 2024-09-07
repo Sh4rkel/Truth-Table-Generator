@@ -19,7 +19,6 @@ function convert() {
   displayResult(result);
 }
 
-
 function displayResult(result) {
   const resultContainer = document.getElementById('resultContainer');
   resultContainer.innerHTML = '';
@@ -28,7 +27,6 @@ function displayResult(result) {
   resultElement.textContent = `Result: ${result}`;
   resultContainer.appendChild(resultElement);
 }
-
 
 function convertToTwosComplement(inputNumber, fromBase) {
   const binaryNumber = parseInt(inputNumber, fromBase).toString(2);
